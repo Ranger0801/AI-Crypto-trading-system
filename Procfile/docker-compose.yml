@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  api:
+    build: .
+    command: gunicorn backend.app:app --bind 0.0.0.0:5000
+    ports:
+      - "5000:5000"
+    env_file: .env
+
+  scanner:
+    build: .
+    command: python -m scheduler.run_scanner
+    env_file: .env
+    restart: always
